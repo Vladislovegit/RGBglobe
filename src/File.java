@@ -40,7 +40,7 @@ public class File {
         }
     }
 
-    public static void update(String nameFile, String newText) throws FileNotFoundException {
+    public static void update(String nameFile, String newText) throws IOException {
         exists(nameFile);
         StringBuilder sb = new StringBuilder();
         String oldFile = read(nameFile);
@@ -49,7 +49,7 @@ public class File {
         write(nameFile, sb.toString() + "\r\n");
     }
 
-    private static String read(String fileName) throws FileNotFoundException {
+    private static String read(String fileName) throws IOException {
         //Этот спец. объект для построения строки
         StringBuilder sb = new StringBuilder();
 
@@ -77,15 +77,10 @@ public class File {
         return sb.toString();
     }
 
-    private static void exists(String fileName) throws FileNotFoundException {
+    private static void exists(String fileName) throws IOException {
         java.io.File file = new java.io.File(fileName);
-        if (!file.exists()) {
-            try {
-                file.createNewFile();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
+        if (!file.exists())
+            file.createNewFile();
     }
 }
 
