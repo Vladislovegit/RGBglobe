@@ -2,16 +2,17 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
 public class RGBglobeUI {
-    private final static int SIZE_OF_BUTTON = 12;
-    private final static int ROWS = 24;
-    private final static int COLUMNS = 50;
+    public final static int SIZE_OF_BUTTON = 12;
+    public final static int ROWS = 24;
+    public final static int COLUMNS = 50;
     private final static int WIDTH_OF_WINDOW = COLUMNS * SIZE_OF_BUTTON + 150;
     private final static int HEIGHT_OF_WINDOW = SIZE_OF_BUTTON * ROWS + 30;
     private final static int NUMBER_OF_COLORS = 8;
 
-    private JButton buttons[][];
+    public JButton buttons[][];
     private JRadioButtonMenuItem colors[];
     private Color colorsOfButtons[] = {Color.RED, Color.GREEN, Color.BLUE, Color.CYAN, Color.YELLOW, Color.MAGENTA, Color.WHITE, Color.BLACK};
 
@@ -54,7 +55,7 @@ public class RGBglobeUI {
             colors[i].addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent arg0) {
-                    for (JRadioButtonMenuItem c: colors) {
+                    for (JRadioButtonMenuItem c : colors) {
                         c.setSelected(false);
                     }
                     colors[j].setSelected(true);
@@ -78,7 +79,11 @@ public class RGBglobeUI {
         save.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent arg0) {
-                JColorChooser.showDialog(null , "Color", null);
+                try {
+                    FileManager.saveFiles(buttons);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         });
         panel.add(save);
@@ -100,7 +105,7 @@ public class RGBglobeUI {
 
     private Color getColor() {
         for (int k = 0; k < NUMBER_OF_COLORS; k++) {
-            if(colors[k].isSelected()) {
+            if (colors[k].isSelected()) {
                 return colorsOfButtons[k];
             }
         }
