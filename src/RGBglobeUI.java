@@ -2,15 +2,18 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.io.IOException;
 
 public class RGBglobeUI {
     public final static int SIZE_OF_BUTTON = 12;
     public final static int ROWS = 24;
-    public final static int COLUMNS = 50;
+    public final static int COLUMNS = 100;
     private final static int WIDTH_OF_WINDOW = COLUMNS * SIZE_OF_BUTTON + 150;
     private final static int HEIGHT_OF_WINDOW = SIZE_OF_BUTTON * ROWS + 30;
     private final static int NUMBER_OF_COLORS = 8;
+    private static int CLICKED = 0;
 
     public JButton buttons[][];
     private JRadioButtonMenuItem colors[];
@@ -36,10 +39,30 @@ public class RGBglobeUI {
                 buttons[i][j].setBackground(Color.BLACK);
                 buttons[i][j].setBounds(x, y, SIZE_OF_BUTTON, SIZE_OF_BUTTON);
                 final int a = i, b = j;
-                buttons[i][j].addActionListener(new ActionListener() {
+                buttons[i][j].addMouseListener(new MouseListener() {
                     @Override
-                    public void actionPerformed(ActionEvent arg0) {
+                    public void mouseClicked(MouseEvent e) {
+                    }
+
+                    @Override
+                    public void mousePressed(MouseEvent e) {
+                        CLICKED = 1;
                         buttons[a][b].setBackground(getColor());
+                    }
+
+                    @Override
+                    public void mouseReleased(MouseEvent e){
+                        CLICKED = 0;
+                    }
+
+                    @Override
+                    public void mouseEntered(MouseEvent e) {
+                        if(CLICKED == 1) buttons[a][b].setBackground(getColor());
+                    }
+
+                    @Override
+                    public void mouseExited(MouseEvent e) {
+
                     }
                 });
                 panel.add(buttons[i][j]);
@@ -70,6 +93,32 @@ public class RGBglobeUI {
             colorsLabel[i].setBounds(WIDTH_OF_WINDOW - 115, y, 15, 15);
             colorsLabel[i].setOpaque(true);
             colorsLabel[i].setBackground(colorsOfButtons[i]);
+            final int j = i;
+            colorsLabel[i].addMouseListener(new MouseListener() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
+
+                }
+                @Override
+                public void mousePressed(MouseEvent e) {
+                    for (JRadioButtonMenuItem c : colors) {
+                        c.setSelected(false);
+                    }
+                    colors[j].setSelected(true);
+                }
+                @Override
+                public void mouseReleased(MouseEvent e) {
+
+                }
+                @Override
+                public void mouseEntered(MouseEvent e) {
+
+                }
+                @Override
+                public void mouseExited(MouseEvent e) {
+
+                }
+            });
             panel.add(colorsLabel[i]);
         }
 

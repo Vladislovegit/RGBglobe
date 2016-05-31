@@ -6,9 +6,9 @@ import java.text.SimpleDateFormat;
 
 
 public class FileManager {
-    private static String FILENAME_RED = "res/" + getTimeAndDate() + "_r.txt";
-    private static String FILENAME_GREEN = "res/" + getTimeAndDate() + "_g.txt";
-    private static String FILENAME_BLUE = "res/" + getTimeAndDate() + "_b.txt";
+    private static String FILENAME_RED = "./" + getTimeAndDate() + "_r.txt";
+    private static String FILENAME_GREEN = "./" + getTimeAndDate() + "_g.txt";
+    private static String FILENAME_BLUE = "./" + getTimeAndDate() + "_b.txt";
 
     public static void saveFiles(JButton btns[][]) throws IOException {
         createFiles();
@@ -18,13 +18,10 @@ public class FileManager {
         File.write(FILENAME_BLUE, "{");
 
         for (int i = 0, y = 0; i < RGBglobeUI.ROWS; i++, y += RGBglobeUI.SIZE_OF_BUTTON) {
-            File.update(FILENAME_RED, "{");
-            File.update(FILENAME_GREEN, "{");
-            File.update(FILENAME_BLUE, "{");
 
             for (int j = 0, x = 0; j < RGBglobeUI.COLUMNS; j++, x += RGBglobeUI.SIZE_OF_BUTTON) {
-                String tail = ", ";
-                if (j == RGBglobeUI.COLUMNS - 1) tail = "";
+                String tail = ",";
+                if (i == RGBglobeUI.ROWS - 1 && j == RGBglobeUI.COLUMNS - 1) tail = "";
 
                 if (btns[i][j].getBackground() == Color.RED) {
                     File.update(FILENAME_RED, "1" + tail);
@@ -67,12 +64,6 @@ public class FileManager {
                     File.update(FILENAME_BLUE, "0" + tail);
                 }
             }
-            String tail = ", ";
-            if (i == RGBglobeUI.ROWS - 1) tail = "";
-
-            File.update(FILENAME_RED, "}" + tail);
-            File.update(FILENAME_GREEN, "}" + tail);
-            File.update(FILENAME_BLUE, "}" + tail);
         }
         File.update(FILENAME_RED, "}");
         File.update(FILENAME_GREEN, "}");
