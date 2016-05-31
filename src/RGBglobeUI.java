@@ -15,7 +15,7 @@ public class RGBglobeUI {
     private final static int NUMBER_OF_COLORS = 8;
     private static int CLICKED = 0;
 
-    public JButton buttons[][];
+    private JButton buttons[][];
     private JRadioButtonMenuItem colors[];
     private Color colorsOfButtons[] = {Color.RED, Color.GREEN, Color.BLUE, Color.CYAN, Color.YELLOW, Color.MAGENTA, Color.WHITE, Color.BLACK};
 
@@ -129,7 +129,7 @@ public class RGBglobeUI {
             @Override
             public void actionPerformed(ActionEvent arg0) {
                 try {
-                    FileManager.saveFiles(buttons);
+                    (new FileManager()).saveFiles(buttons);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -170,6 +170,6 @@ public class RGBglobeUI {
     }
 
     public static void main(String[] args) {
-        RGBglobeUI ui = new RGBglobeUI();
+        new RGBglobeUI();
     }
 }
